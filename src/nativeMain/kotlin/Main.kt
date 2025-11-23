@@ -5,16 +5,27 @@ import kotlin.math.max
 import kotlin.system.measureTimeMillis
 import kotlin.time.measureTime
 
-/** Example usage */
-fun main() {
-  val (bigGraph, smallGraph)
-          = readTwoAdjacencyMatrices("/Users/ernestmolczan/IdeaProjects/MinimalExtensionGraph/src/sample_graphs1.txt")
+fun main(args: Array<String>) {
+  if (args.size < 2) {
+    println("Usage: <program> <path_to_file> <m>")
+    println("  path_to_file: Path to the file containing adjacency matrices")
+    println("  m: Number of copies of smallGraph to find")
+    return
+  }
+
+  val filePath = args[0]
+  val m = args[1].toIntOrNull() ?: run {
+    println("Error: m must be a valid integer")
+    return
+  }
+
+  val (bigGraph, smallGraph) = readTwoAdjacencyMatrices(filePath)
+
 
   val n = bigGraph.size
   val bigGraphVertices = (0 until n).toList()
   val k = smallGraph.size
   val smallGraphVertices = (0 until k).toList()
-  val m = 1
 
   val elapsedTime = measureTime {
 
